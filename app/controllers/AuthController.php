@@ -2,31 +2,15 @@
 
 namespace app\controllers;
 
-use app\dto\UserRegisterDto;
+use app\dto\AuthLoginDto;
+use app\dto\AuthRegisterDto;
 use app\models\User;
 use Yii;
 use yii\db\Exception;
-use yii\filters\auth\HttpBasicAuth;
-use yii\rest\ActiveController;
 
-class AuthController extends ActiveController
+class AuthController extends BaseController
 {
     public $modelClass = User::class;
-
-    public function behaviors(): array
-    {
-        $behaviors = parent::behaviors();
-
-        $behaviors['authenticator'] = [
-            'class' => HttpBasicAuth::class,
-            'except' => ['register'],
-            'auth' => function (string $accessToken) {
-                return User::findIdentityByAccessToken($accessToken);
-            },
-        ];
-
-        return $behaviors;
-    }
 
     /**
      * @throws Exception
@@ -34,12 +18,25 @@ class AuthController extends ActiveController
      */
     public function actionRegister(): array
     {
-        $userRegisterDto = new UserRegisterDto(Yii::$app->request->post());
+        $data = Yii::$app->request->post();
+        $authRegisterDto = new AuthRegisterDto(
+            $data['username'],
+            $data['first_name'],
+            $data['last_name'],
+            $data['password'],
+            $data['password_confirm'],
+            $data['email'],
+            $data['phone'],
+        );
 
         $user = new User();
-        $user->username = $userRegisterDto->username;
-        $user->password = $userRegisterDto->password;
-        $user->password_confirm = $userRegisterDto->password_confirm;
+        $user->username = $authRegisterDto->username;
+        $user->first_name = $authRegisterDto->first_name;
+        $user->last_name = $authRegisterDto->last_name;
+        $user->password = $authRegisterDto->password;
+        $user->password_confirm = $authRegisterDto->password_confirm;
+        $user->email = $authRegisterDto->email;
+        $user->phone = $authRegisterDto->phone;
         $user->generatePasswordHash();
         $user->generateAccessToken();
 
@@ -48,7 +45,7 @@ class AuthController extends ActiveController
                 return [
                     'status' => 'success',
                     'message' => 'Пользователь зарегистрирован.',
-                    'token' => $user->access_token
+                    'token' => $user->getAccessToken()
                 ];
             } else {
                 return $user->errors;
@@ -67,18 +64,21 @@ class AuthController extends ActiveController
      */
     public function actionLogin(): array
     {
-        $username = Yii::$app->request->post('username');
-        $password = Yii::$app->request->post('password');
+        $data = Yii::$app->request->post();
+        $authLoginDto = new AuthLoginDto(
+            $data['username'],
+            $data['password'],
+        );
 
-        $user = User::findOne(['username' => $username]);
-        if ($user && $user->validatePassword($password)) {
+        $user = User::findOne(['username' => $authLoginDto->username]);
+        if ($user && $user->validatePassword($authLoginDto->password)) {
             $user->generateAccessToken();
             $user->save();
 
             return [
                 'status' => 'success',
                 'message' => 'Пользователь авторизован.',
-                'token' => $user->access_token
+                'token' => $user->getAccessToken()
             ];
         } else {
 

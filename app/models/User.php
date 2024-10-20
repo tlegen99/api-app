@@ -16,32 +16,15 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return 'users';
     }
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
     public function rules()
     {
         return [
             [['username', 'password', 'password_confirm'], 'required', 'message' => 'Введите данные'],
-            ['username', 'string', 'max' => 60],
+            [['username', 'first_name', 'last_name'], 'string', 'max' => 60],
             ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Это имя пользователя уже занято'],
             ['password', 'string', 'min' => 6],
             ['password_confirm', 'compare', 'compareAttribute' => 'password', 'message' => "Пароли не совпадают"],
-            [['password_hash', 'access_token'], 'safe']
+            [['password_hash', 'access_token', 'email', 'phone'], 'safe'],
         ];
     }
 
@@ -70,7 +53,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne(['id' => $id]);
     }
 
     /**
@@ -89,13 +72,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return static::findOne(['username' => $username]);
     }
 
     /**
@@ -119,5 +96,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword(string $password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
+
+    public function getAccessToken(): string
+    {
+        return $this->access_token;
     }
 }
