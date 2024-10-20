@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b246a2db-f4f3-4b29-9ad9-7eac3166eab2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/controllers/BaseController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/UserController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dto/AuthLoginDto.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dto/ProfileDto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dto/TaskCreateDto.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dto/TaskDto.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/config/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dto/UserRegisterDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/dto/AuthRegisterDto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/migrations/m241014_193647_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/migrations/m241014_193647_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dto/ProfileDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/dto/ProfileDto.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +170,7 @@
       <workItem from="1729056523257" duration="12842000" />
       <workItem from="1729147042599" duration="5980000" />
       <workItem from="1729230244083" duration="13035000" />
-      <workItem from="1729430238411" duration="5282000" />
+      <workItem from="1729430238411" duration="11081000" />
     </task>
     <task id="LOCAL-00001" summary="init project, добавлено: регистрация и авторизация по токену">
       <option name="closed" value="true" />
@@ -185,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729363876805</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="правит Дто, добавляет класс с действием показать данные профиля, добавляет данные в таблицу">
+      <option name="closed" value="true" />
+      <created>1729436083671</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1729436083671</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,6 +196,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init project, добавлено: регистрация и авторизация по токену" />
-    <option name="LAST_COMMIT_MESSAGE" value="init project, добавлено: регистрация и авторизация по токену" />
+    <MESSAGE value="правит Дто, добавляет класс с действием показать данные профиля, добавляет данные в таблицу" />
+    <option name="LAST_COMMIT_MESSAGE" value="правит Дто, добавляет класс с действием показать данные профиля, добавляет данные в таблицу" />
   </component>
 </project>

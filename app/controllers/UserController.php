@@ -16,9 +16,7 @@ class UserController extends BaseController
      */
     public function actionProfile()
     {
-        $user = Yii::$app->user->identity;
-
-        if ($user) {
+        if ($user = Yii::$app->user->identity) {
             $profileDto = new ProfileDto(
                 $user->id,
                 $user->username,
