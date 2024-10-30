@@ -33,7 +33,8 @@
         "codeception/module-rest": "3.4.0",
         "codeception/module-db": "3.1.4",
         "symfony/var-dumper": "^5.1",
-        "codeception/module-phpbrowser": "^3.0.1"
+        "codeception/module-phpbrowser": "^3.0.1",
+        "codeception/module-webdriver": "^4.0"
     },
     "config": {
         "allow-plugins": {

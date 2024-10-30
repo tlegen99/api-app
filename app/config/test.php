@@ -26,7 +26,16 @@ return [
             'basePath' => __DIR__ . '/../web/assets',
         ],
         'urlManager' => [
-            'showScriptName' => true,
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => true,
+            'rules' => [
+                'POST auth/register' => 'auth/register',
+                'POST auth/login' => 'auth/login',
+                'GET user/profile' => 'user/profile',
+                'GET task/list' => 'task/list',
+                'POST task/create' => 'task/create',
+            ],
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -34,12 +43,9 @@ return [
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,
-            // but if you absolutely need it set cookie domain to localhost
-            /*
-            'csrfCookie' => [
-                'domain' => 'localhost',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser'
             ],
-            */
         ],
     ],
     'params' => $params,

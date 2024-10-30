@@ -50,10 +50,13 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => true,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'auth'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'task'],
+                'POST auth/register' => 'auth/register',
+                'POST auth/login' => 'auth/login',
+                'GET user/profile' => 'user/profile',
+                'GET task/list' => 'task/list',
+                'POST task/create' => 'task/create',
             ],
         ],
     ],
