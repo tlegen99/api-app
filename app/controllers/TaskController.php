@@ -29,8 +29,7 @@ class TaskController extends BaseController
     public function actionCreate(): array
     {
         if ($user = Yii::$app->user->identity) {
-            $data = Yii::$app->request->post();
-            $taskCreateDto = new TaskCreateDto($data['user_id'], $user->id, $data['title'], $data['body']);
+            $taskCreateDto = new TaskCreateDto(Yii::$app->request->post(), $user->id);
 
             $task = new Task();
             $task->user_id = $taskCreateDto->user_id;
@@ -39,13 +38,19 @@ class TaskController extends BaseController
             $task->body = $taskCreateDto->body;
             $task->created_at = time();
 
-            if ($task->validate() && $task->save()) {
-                return [
-                    'status' => 'success',
-                    'task_id' => $task->id,
-                    'message' => 'Задача создана.',
-                ];
+            if (!$task->validate()) {
+                Yii::$app->response->statusCode = 422;
+
+                return ['status' => 'error', 'message' => $task->errors];
             }
+
+            if (!$task->save()) {
+                Yii::$app->response->statusCode = 500;
+
+                return ['status' => 'error', 'message' => $task->errors];
+            }
+
+            return ['status' => 'success', 'task_id' => $task->id, 'message' => 'Задача создана.'];
         }
 
         throw new UnauthorizedHttpException('Пользователь не авторизован.');
@@ -63,13 +68,10 @@ class TaskController extends BaseController
 
             /** @var Task $task */
             foreach ($tasks as $task) {
-                $taskList[] = new TaskDto($task->id, $task->title, $task->body, $task->created_at,);
+                $taskList[] = new TaskDto($task->id, $task->title, $task->body, $task->created_at);
             }
 
-            return [
-                'status' => 'success',
-                'data' => $taskList
-            ];
+            return ['status' => 'success', 'data' => $taskList];
         }
 
         throw new UnauthorizedHttpException('Пользователь не авторизован.');

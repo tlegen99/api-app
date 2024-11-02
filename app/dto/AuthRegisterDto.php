@@ -4,22 +4,22 @@ namespace app\dto;
 
 class AuthRegisterDto
 {
-    public ?string $username = null;
-    public ?string $first_name = null;
-    public ?string $last_name = null;
-    public ?string $password = null;
-    public ?string $password_confirm = null;
-    public ?string $email = null;
-    public ?string $phone = null;
+    public string $username;
+    public string $first_name;
+    public string $last_name;
+    public string $password;
+    public string $password_confirm;
+    public string $email;
+    public string $phone;
 
     public function __construct(array $data)
     {
         $this->username         = $data['username'] ?? '';
-        $this->first_name       = $data['first_name'] ?? '';
-        $this->last_name        = $data['last_name'] ?? '';
+        $this->first_name       = $data['first_name'] ?? null;
+        $this->last_name        = $data['last_name'] ?? null;
         $this->password         = $data['password'] ?? '';
         $this->password_confirm = $data['password_confirm'] ?? '';
-        $this->email            = $data['email'] ?? '';
-        $this->phone            = $data['phone'] ?? '';
+        $this->email            = $data['email'] ?? null;
+        $this->phone            = $data['phone'] ?? null;
     }
 }

@@ -4,8 +4,8 @@ namespace app\dto;
 
 class AuthLoginDto
 {
-    public ?string $username = null;
-    public ?string $password = null;
+    public string $username;
+    public string $password;
 
     public function __construct(array $data) {
         $this->username = $data['username'] ?? '';

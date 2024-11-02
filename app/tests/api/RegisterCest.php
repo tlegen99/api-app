@@ -110,20 +110,4 @@ class RegisterCest
             ]
         ]);
     }
-
-//    public function registerWithSQLInjection(ApiTester $I): void
-//    {
-//        $data = [
-//            'username' => "testuser'; DROP TABLE users; --",
-//            'password' => '123456',
-//            'password_confirm' => '123456',
-//        ];
-//
-//        $I->sendPost('/auth/register', $data);
-//
-//        $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
-//        $I->seeResponseContainsJson([
-//            'status' => 'error'
-//        ]);
-//    }
 }
