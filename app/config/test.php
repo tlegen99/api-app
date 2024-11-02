@@ -25,6 +25,9 @@ return [
         'assetManager' => [
             'basePath' => __DIR__ . '/../web/assets',
         ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,

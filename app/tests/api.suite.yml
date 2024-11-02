@@ -6,6 +6,7 @@ modules:
         depends: Yii2
         part: JSON
         configFile: "config/test.php"
+        rateLimiter: false
     - Asserts
     - Yii2:
       entryScript: index-test.php

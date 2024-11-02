@@ -20,6 +20,8 @@ class BaseController extends ActiveController
             },
         ];
 
+        $behaviors['rateLimiter']['except'] = ['register'];
+
         return $behaviors;
     }
 }

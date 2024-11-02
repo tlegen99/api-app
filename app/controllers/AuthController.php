@@ -18,16 +18,7 @@ class AuthController extends BaseController
      */
     public function actionRegister(): array
     {
-        $data = Yii::$app->request->post();
-        $authRegisterDto = new AuthRegisterDto(
-            $data['username'],
-            $data['first_name'],
-            $data['last_name'],
-            $data['password'],
-            $data['password_confirm'],
-            $data['email'],
-            $data['phone'],
-        );
+        $authRegisterDto = new AuthRegisterDto(Yii::$app->request->post());
 
         $user = new User();
         $user->username = $authRegisterDto->username;
@@ -41,22 +32,29 @@ class AuthController extends BaseController
         $user->generateAccessToken();
         $user->created_at = time();
 
-        if ($user->validate()) {
-            if ($user->save()) {
-                return [
-                    'status' => 'success',
-                    'message' => 'Пользователь зарегистрирован.',
-                    'token' => $user->getAccessToken()
-                ];
-            } else {
-                return $user->errors;
-            }
-        } else {
+        if (!$user->validate()) {
+            Yii::$app->response->statusCode = 422;
+
             return [
                 'status' => 'error',
                 'message' => $user->errors,
             ];
         }
+
+        if (!$user->save()) {
+            Yii::$app->response->statusCode = 500;
+
+            return [
+                'status' => 'error',
+                'message' => $user->errors,
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'message' => 'Пользователь зарегистрирован.',
+            'token' => $user->getAccessToken()
+        ];
     }
 
     /**
@@ -65,11 +63,7 @@ class AuthController extends BaseController
      */
     public function actionLogin(): array
     {
-        $data = Yii::$app->request->post();
-        $authLoginDto = new AuthLoginDto(
-            $data['username'],
-            $data['password'],
-        );
+        $authLoginDto = new AuthLoginDto(Yii::$app->request->post());
 
         $user = User::findOne(['username' => $authLoginDto->username]);
         if ($user && $user->validatePassword($authLoginDto->password)) {

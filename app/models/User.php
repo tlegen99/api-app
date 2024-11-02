@@ -33,11 +33,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'password_confirm'], 'required', 'message' => 'Введите данные'],
+            [['username', 'password', 'password_confirm'], 'required', 'message' => 'Поле не может быть пустым.'],
             [['username', 'first_name', 'last_name', 'phone'], 'string', 'max' => 60],
-            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Это имя пользователя уже занято'],
-            ['password_confirm', 'compare', 'compareAttribute' => 'password', 'message' => "Пароли не совпадают"],
-            ['password', 'string', 'min' => 6],
+            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Это имя пользователя уже занято.'],
+            ['password', 'string', 'min' => 6, 'tooShort' => 'Пароль должен содержать не менее 6 символов.'],
+            ['password_confirm', 'compare', 'compareAttribute' => 'password', 'message' => "Пароли не совпадают."],
             [['password_hash', 'access_token', 'email'], 'string'],
             ['created_at', 'integer'],
         ];
