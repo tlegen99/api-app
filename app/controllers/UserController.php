@@ -27,10 +27,7 @@ class UserController extends BaseController
                 $user->created_at
             );
 
-            return [
-                'status' => 'success',
-                'data' => $profileDto
-            ];
+            return ['status' => 'success', 'data' => $profileDto];
         }
 
         throw new UnauthorizedHttpException('Пользователь не авторизован.');

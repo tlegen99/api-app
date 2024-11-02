@@ -63,7 +63,15 @@ class AuthController extends BaseController
      */
     public function actionLogin(): array
     {
-        $authLoginDto = new AuthLoginDto(Yii::$app->request->post());
+        $authLoginDto = new AuthLoginDto();
+        $authLoginDto->load(Yii::$app->request->post(), '');
+
+        if (!$authLoginDto->validate()) {
+            return [
+                'status' => 'error',
+                'message' => $authLoginDto->errors,
+            ];
+        }
 
         $user = User::findOne(['username' => $authLoginDto->username]);
         if ($user && $user->validatePassword($authLoginDto->password)) {
@@ -77,7 +85,7 @@ class AuthController extends BaseController
             ];
         } else {
 
-            return ['error' => 'Неверное имя пользователя или пароль.'];
+            return ['status' => 'error', 'message' => 'Неверное имя пользователя или пароль.'];
         }
     }
 }

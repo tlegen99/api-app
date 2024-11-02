@@ -5,12 +5,12 @@ namespace app\dto;
 class AuthRegisterDto
 {
     public string $username;
-    public string $first_name;
-    public string $last_name;
+    public ?string $first_name;
+    public ?string $last_name;
     public string $password;
     public string $password_confirm;
-    public string $email;
-    public string $phone;
+    public ?string $email;
+    public ?string $phone;
 
     public function __construct(array $data)
     {
